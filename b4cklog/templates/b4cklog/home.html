@@ -1,4 +1,14 @@
 {% extends 'b4cklog/base.html' %}
+{% load static %}
 {% block content %}
-    <h2>This is home.</h2>
+    {% for game in games %}
+        <article class="media content-section">
+            <div class="media-body">
+                <div class="article-metadata">
+                    <a class="mr-2" href="#">{{ game.name }}</a>
+                    <small class="text-muted">{{ game.release_date|date:"F d, Y" }}</small>
+                </div>
+            </div>
+        </article>
+    {% endfor %}
 {% endblock content %}

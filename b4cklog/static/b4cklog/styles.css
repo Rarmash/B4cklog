@@ -2,14 +2,42 @@ body {
     background-color: rgb(36, 35, 35);
 }
 
-h1 {
-    color: white;
-}
-
-h2 {
+h1, h2, h3, h4, h5, h6, small, footer a {
     color: white;
 }
 
 .nav-item {
+    color: white;
+}
+
+.navbar-right {
+    text-align: right;
+}
+
+.article-metadata a {
+    color: white;
+}
+
+.form-group {
+    color: white;
+}
+
+.alert {
+    color: white;
+}
+
+.media-body p {
+    color: white;
+}
+
+footer {
+    position: sticky!important;
+    top: 100%;
+    padding-top:25px;
+    padding-bottom:25px;
+    border-top:1px solid #ddd;
+}
+
+.border-top a{
     color: white;
 }
