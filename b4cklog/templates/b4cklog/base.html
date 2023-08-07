@@ -1,0 +1,26 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="{% static 'b4cklog/styles.css' %}">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        {% if title %}
+            <title>{{ title }}</title>
+        {% else %}
+            <title>B4cklog</title>
+        {% endif %}
+    </head>
+    <body>
+        <header class="site-header">
+            <nav class="menu">
+                <div class="navbar">
+                    <a class="nav-item nav-link" href="{% url 'b4cklog-home' %}">Home</a>
+                    <a class="nav-item nav-link" href="{% url 'b4cklog-about' %}">About</a>
+                </div>
+            </nav>
+        </header>
+        {% block content %}{% endblock %}
+    </body>
+</html>
