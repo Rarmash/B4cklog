@@ -1,12 +1,13 @@
 from django.db import models
-from django.utils import timezone
-from django.contrib.auth.models import User
+from PIL import Image
+from django.contrib.postgres.fields import ArrayField
 
-
-class Post(models.Model):
-    name = models.CharField(max_length=100)
-    release_date = models.DateTimeField(default=timezone.now)
-    #author = models.ForeignKey(User, on_delete=models.CASCADE)
+class Game(models.Model):
+    igdb_id = models.IntegerField(unique=True)  # Уникальный ID игры из IGDB
+    name = models.CharField(max_length=200)
+    summary = models.TextField()
+    cover = models.URLField(default='https://icon-library.com/images/steam-question-mark-icon/steam-question-mark-icon-29.jpg')
+    first_release_date = models.DateField(null=True)
 
     def __str__(self):
         return self.name

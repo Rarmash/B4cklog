@@ -5,8 +5,9 @@
         <article class="media content-section">
             <div class="media-body">
                 <div class="article-metadata">
+                    <img class="game-icons" src="{{ game.cover }}" alt="{{ game.name }}">
                     <a class="mr-2" href="#">{{ game.name }}</a>
-                    <small class="text-muted">{{ game.release_date|date:"F d, Y" }}</small>
+                    <small class="text-muted">{{ game.first_release_date|date:"F d, Y" }}</small>
                 </div>
             </div>
         </article>

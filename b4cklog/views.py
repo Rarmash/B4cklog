@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from .models import Post
+from .models import Game
 
 games = [
     {
@@ -14,7 +14,7 @@ games = [
 
 def home(request):
     context = {
-		'games': Post.objects.all()
+		'games': Game.objects.all()
 	}
     return render(request, 'b4cklog/home.html', context)
  

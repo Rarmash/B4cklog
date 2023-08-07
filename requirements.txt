@@ -2,3 +2,6 @@ Django==4.2.4
 django-crispy-forms==2.0
 crispy-bootstrap4==2022.1
 Pillow==10.0.0
+requests==2.31.0
+psycopg2-binary==2.9.7
+python-dotenv==1.0.0

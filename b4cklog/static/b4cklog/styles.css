@@ -47,4 +47,9 @@ footer {
     width: 125px;
     margin-right: 20px;
     margin-bottom: 16px;
-  }
+}
+
+.game-icons {
+    height: 50px;
+    width: 50px;
+}
