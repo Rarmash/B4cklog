@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
+from django.contrib.auth.models import User
 
 
 def register(request):
@@ -18,23 +19,29 @@ def register(request):
 
 
 @login_required
-def profile(request):
+def redirect_to_own_profile(request):
+    return redirect('profile', username=request.user.username)
+
+@login_required
+def profile(request, username):
+    user = get_object_or_404(User, username__iexact=username)
+
     if request.method == 'POST':
-        u_form = UserUpdateForm(request.POST, instance=request.user)
+        u_form = UserUpdateForm(request.POST, instance=user)
         p_form = ProfileUpdateForm(request.POST,
                                    request.FILES,
-                                   instance=request.user.profile)
+                                   instance=user.profile)
         if u_form.is_valid() and p_form.is_valid():
             u_form.save()
             p_form.save()
             messages.success(request, f'Your profile has been successfully updated.')
-            return redirect('profile')
-
+            return redirect('user_profile', username=username)
     else:
-        u_form = UserUpdateForm(instance=request.user)
-        p_form = ProfileUpdateForm(instance=request.user.profile)
+        u_form = UserUpdateForm(instance=user)
+        p_form = ProfileUpdateForm(instance=user.profile)
 
     context = {
+        'user': user,
         'u_form': u_form,
         'p_form': p_form,
     }
