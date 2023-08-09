@@ -2,7 +2,7 @@ import requests
 from django.core.management.base import BaseCommand
 from ...models import Game
 import datetime
-from ....options import twitch_clientID, twitch_clientSecret
+from options import twitch_clientID, twitch_clientSecret
 
 class Command(BaseCommand):
     help = 'Import games from IGDB'
@@ -21,7 +21,8 @@ class Command(BaseCommand):
             "Client-ID": clientID,
             "Authorization": f"Bearer {access_token}",
         }
-        data = "fields name,summary,cover.url,first_release_date,genres; limit 500;"  # Измените параметры запроса по своему усмотрению
+        print(access_token)
+        data = 'search "Forza"; fields name,summary,cover.url,first_release_date,genres; limit 500;'  # Измените параметры запроса по своему усмотрению
 
         # Отправьте запрос к API IGDB
         response = requests.post(url, headers=headers, data=data)
@@ -45,7 +46,7 @@ class Command(BaseCommand):
                     game.summary = game_data.get("summary")
                 if "cover" in game_data:
                     if "url" in game_data[u'cover']:
-                        game.cover = 'https://' + str(game_data.get("cover")[u"url"])[2:]
+                        game.cover = str('https://' + str(game_data.get("cover")[u"url"])[2:]).replace("t_thumb", "t_cover_big")
                 game.first_release_date = first_release_date
                 game.save()
                 self.stdout.write(self.style.SUCCESS(f"Imported game: {game.name}"))

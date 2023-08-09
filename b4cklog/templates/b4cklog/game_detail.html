@@ -1,0 +1,19 @@
+{% extends 'b4cklog/base.html' %}
+{% load static %}
+{% block content %}
+    <div class="game-detail">
+        <div class="game-cover">
+            {% if game.cover %}
+                <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+            {% else %}
+                <img src="{% static 'default_cover.jpg' %}" alt="{{ game.name }} Cover">
+            {% endif %}
+        </div>
+        <div class="game-details">
+            <h1 class="game-title">{{ game.name }}</h1>
+            <p class="game-summary">{{ game.summary }}</p>
+            <p class="release-date">First Release Date: <span class="italic">{{ game.first_release_date }}</span></p>
+            <a href="{% url 'b4cklog-home' %}" class="back-link">Back to Game List</a>
+        </div>
+    </div>
+{% endblock content %}

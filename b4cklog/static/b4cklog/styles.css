@@ -1,17 +1,47 @@
 body {
     background-color: rgb(36, 35, 35);
+    padding-top: 0px; /* Добавьте это */
+    overflow-x: hidden;
 }
 
 h1, h2, h3, h4, h5, h6, small, footer a {
     color: white;
 }
 
-.nav-item {
-    color: white;
+.site-header {
+    top: 0;
+    left: 0;
+    width: 100%;
+	height: 70px;
+    position: fixed;
 }
 
-.navbar-right {
-    text-align: right;
+.content-block {
+    margin-top:80px;
+}
+
+.title-block {
+    text-align: center;
+    background-color: black;
+}
+
+.title {
+    font-size: large;
+    display: inline-block;
+    color: white;
+    text-align: center;
+}
+
+.menu {
+    background-color: darkslategray;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-item {
+    color: white;
+    margin-right: 10px;
 }
 
 .article-metadata a {
@@ -49,7 +79,69 @@ footer {
     margin-bottom: 16px;
 }
 
-.game-icons {
-    height: 50px;
-    width: 50px;
+.game-tiles {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.game-tile {
+    width: calc(15% - 10px);
+    margin-bottom: 20px;
+}
+
+.game-detail {
+    display: flex;
+    align-items: flex-start;
+    margin: 20px;
+}
+
+.game-cover img {
+    max-height: 350px;
+    width: auto;
+    height: auto;  
+    margin-right: 20px;
+    border-radius: 7.5%;
+    border: 1px solid black;
+}
+
+.game-details {
+    flex: 1;
+}
+
+.game-title {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.game-summary {
+    margin-top: 10px;
+    text-align: justify;
+    color: white;
+}
+
+.release-date {
+    font-style: italic;
+    margin-top: 5px;
+    color: white;
+}
+
+.back-link {
+    display: block;
+    margin-top: 20px;
+    color: white;
+}
+
+@media (max-width: 768px) {
+    .game-tile {
+        width: calc(50% - 10px);
+    }
+    .game-cover img {
+        max-width: 170px; /* Уменьшаем высоту обложки */
+        height: auto;
+        border-radius: 7.5%;
+        border: 1px solid black;
+    }
+    
+
 }

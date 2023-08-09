@@ -1,15 +1,25 @@
 {% extends 'b4cklog/base.html' %}
 {% load static %}
 {% block content %}
-    {% for game in games %}
-        <article class="media content-section">
-            <div class="media-body">
-                <div class="article-metadata">
-                    <img class="game-icons" src="{{ game.cover }}" alt="{{ game.name }}">
-                    <a class="mr-2" href="#">{{ game.name }}</a>
-                    <small class="text-muted">{{ game.first_release_date|date:"F d, Y" }}</small>
+    <div class="game-tiles">
+        {% for game in games %}
+            <article class="game-tile">
+                <div class="media-body">
+                    <div class="article-metadata">
+                        <div class="game-cover">
+                            {% if game.cover %}
+                                <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+                            {% else %}
+                                <img src="{% static 'default_cover.jpg' %}" alt="{{ game.name }} Cover">
+                            {% endif %}
+                        </div>
+                        <br>
+                        <a class="mr-2" href="{% url 'game_detail' igdb_id=game.igdb_id %}">{{ game.name }}</a>
+                        <br>
+                        <small class="text-muted">{{ game.first_release_date|date:"F d, Y" }}</small>
+                    </div>
                 </div>
-            </div>
-        </article>
-    {% endfor %}
+            </article>
+        {% endfor %}
+    </div>
 {% endblock content %}

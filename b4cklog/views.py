@@ -1,16 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from .models import Game
-
-games = [
-    {
-		'name': 'Halo 7',
-		'release_date': 'Dec 31, 2999'
-	},
-	{
-		'name': 'Small RPG',
-		'release_date': 'Never'
-	}
-]
 
 def home(request):
     context = {
@@ -20,3 +9,11 @@ def home(request):
  
 def about(request):
 	return render(request, 'b4cklog/about.html', {'title': 'About B4cklog'})
+
+
+def game_detail(request, igdb_id):
+    game = get_object_or_404(Game, igdb_id=igdb_id)
+    context = {
+        'game': game
+    }
+    return render(request, 'b4cklog/game_detail.html', context)
