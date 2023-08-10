@@ -12,7 +12,14 @@
         <div class="game-details">
             <h1 class="game-title">{{ game.name }}</h1>
             <p class="game-summary">{{ game.summary }}</p>
-            <p class="release-date">First Release Date: <span class="italic">{{ game.first_release_date }}</span></p>
+            <p class="release-date">Release Date: <span class="italic">{{ game.first_release_date }}</span></p>
+            {% if game.platforms.all %}
+                <p class="platforms">Platforms:
+                    {% for platform in game.platforms.all %}
+                        {{ platform.name }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+            {% endif %}
             <a href="{% url 'b4cklog-home' %}" class="back-link">Back to Game List</a>
         </div>
     </div>

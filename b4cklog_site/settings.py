@@ -30,6 +30,7 @@ CSRF_TRUSTED_ORIGINS = ['https://*.ngrok-free.app', 'https://127.0.0.1']
 
 ALLOWED_HOSTS = ['*']
 
+DATA_UPLOAD_MAX_NUMBER_FIELDS = 10240 
 
 # Application definition
 

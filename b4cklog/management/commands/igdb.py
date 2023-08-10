@@ -1,6 +1,6 @@
 import requests
 from django.core.management.base import BaseCommand
-from ...models import Game
+from ...models import Game, Platform
 import datetime
 from options import twitch_clientID, twitch_clientSecret
 
@@ -22,7 +22,7 @@ class Command(BaseCommand):
             "Authorization": f"Bearer {access_token}",
         }
         print(access_token)
-        data = 'search "Quake II"; fields name,summary,cover.url,first_release_date,genres; limit 500;'  # Измените параметры запроса по своему усмотрению
+        data = 'search "Classic NES Series"; fields name,summary,cover.url,first_release_date,genres,platforms; limit 500;'  # Измените параметры запроса по своему усмотрению
 
         # Отправьте запрос к API IGDB
         response = requests.post(url, headers=headers, data=data)
@@ -48,6 +48,25 @@ class Command(BaseCommand):
                     if "url" in game_data[u'cover']:
                         game.cover = str('https://' + str(game_data.get("cover")[u"url"])[2:]).replace("t_thumb", "t_cover_big")
                 game.first_release_date = first_release_date
+                platforms_data = game_data.get("platforms")
+                if platforms_data:
+                    for platform_id in platforms_data:
+                        try:
+                            platform = Platform.objects.get(platform_id=platform_id)
+                        except Platform.DoesNotExist:
+                            platform_url = f"https://api.igdb.com/v4/platforms"
+                            platform_response = requests.post(platform_url, headers=headers, data=f"fields *; where id = {platform_id};").json()[0]
+                            platform, created = Platform.objects.get_or_create(
+                                platform_id=platform_id,
+                                defaults={'name': platform_response.get('name')}
+                            )
+                            if 'abbreviation' in platform_response:
+                                platform.abbreviation = platform_response.get('abbreviation')
+                            else:
+                                platform.abbreviation = platform_response.get('name')
+                            platform.save()
+
+                        game.platforms.add(platform)
                 game.save()
                 self.stdout.write(self.style.SUCCESS(f"Imported game: {game.name}"))
         else:
