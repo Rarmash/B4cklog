@@ -9,4 +9,6 @@ urlpatterns = [
     path('logout/', views.about, name='b4cklog-logout'),
     path('profile/', views.about, name='b4cklog-profile'),
     path('game/<int:igdb_id>/', views.game_detail, name='game_detail'),
+    path('search/', views.game_search, name='game_search'),
+    path('search/results/', views.search_results, name='search_results'),
 ]

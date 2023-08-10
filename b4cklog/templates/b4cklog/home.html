@@ -15,11 +15,24 @@
                         </div>
                         <br>
                         <a class="mr-2" href="{% url 'game_detail' igdb_id=game.igdb_id %}">{{ game.name }}</a>
-                        <br>
-                        <small class="text-muted">{{ game.first_release_date|date:"F d, Y" }}</small>
                     </div>
                 </div>
             </article>
         {% endfor %}
     </div>
+    <div class="pagination">
+        <span class="step-links">
+            {% if games.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ games.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current-page">{{ games.number }} / {{ games.paginator.num_pages }}</span>
+
+            {% if games.has_next %}
+                <a href="?page={{ games.next_page_number }}">next</a>
+                <a href="?page={{ games.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>  
 {% endblock content %}

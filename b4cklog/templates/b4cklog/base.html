@@ -11,6 +11,8 @@
         {% else %}
             <title>B4cklog</title>
         {% endif %}
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="{% static 'b4cklog/game_search.js' %}"></script>
     </head>
     <body>
         <header class="site-header">
@@ -32,6 +34,13 @@
                     {% endif %}
                 </div>
             </nav>
+            <div class="search-container">
+                <form action="{% url 'search_results' %}" method="get" id="search-form">
+                    {% csrf_token %}
+                    <input type="text" id="search-input" name="term" placeholder="Search the game">
+                </form>
+                <div id="search-results"></div>
+            </div>
         </header>
         <div class="content-block">
             {% if messages %}

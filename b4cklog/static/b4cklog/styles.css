@@ -8,6 +8,14 @@ h1, h2, h3, h4, h5, h6, small, footer a {
     color: white;
 }
 
+.pagination {
+    color: white;
+}
+
+.pagination a {
+    color: white;
+}
+
 .site-header {
     top: 0;
     left: 0;
@@ -17,7 +25,7 @@ h1, h2, h3, h4, h5, h6, small, footer a {
 }
 
 .content-block {
-    margin-top:80px;
+    margin-top:110px;
 }
 
 .title-block {
@@ -42,6 +50,63 @@ h1, h2, h3, h4, h5, h6, small, footer a {
 .nav-item {
     color: white;
     margin-right: 10px;
+}
+
+.search-container {
+    margin-top:2px;
+    display: flex;
+    color: white;
+    position: relative;
+}
+
+#search-results {
+    position: absolute;
+    top: calc(100% + 5px);
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    z-index: 1000;
+    visibility: hidden;
+    opacity: 0;
+    transition: top 0.5s ease-in-out, opacity 0.5s ease-in-out;
+    background-color: white; /* Изменено на белый */
+    color: black; /* Изменено на черный */
+    width: auto; /* Динамическая ширина */
+    left: 0; /* Изменено на 0, чтобы выпадающий список был выровнен по левому краю */
+}
+
+.search-container.active #search-results {
+    opacity: 1;
+    visibility: visible;
+    top: calc(100% + 5px);
+    text-decoration: none; /* Убираем подчеркивание */
+    border-bottom: 1px solid #ccc; /* Серая полоса между играми */
+}
+
+.search-result {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* Серая полоса между играми */
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+.search-result span {
+    text-decoration: none; /* Убираем подчеркивание */
+    color: black;
+}
+
+.search-result img {
+    border-radius: 5px;
+    width: 30px; /* Размер иконки игры */
+    height: auto;
+    margin-right: 10px;
+}
+
+.search-result a {
+    text-decoration: none; /* Убираем подчеркивание */
 }
 
 .article-metadata a {
@@ -97,7 +162,8 @@ footer {
 }
 
 .game-cover img {
-    max-height: 350px;
+    max-height: 250px;
+    max-width: 200px;
     width: auto;
     height: auto;  
     margin-right: 20px;
@@ -142,6 +208,4 @@ footer {
         border-radius: 7.5%;
         border: 1px solid black;
     }
-    
-
 }

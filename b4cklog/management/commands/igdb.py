@@ -22,7 +22,7 @@ class Command(BaseCommand):
             "Authorization": f"Bearer {access_token}",
         }
         print(access_token)
-        data = 'search "Forza"; fields name,summary,cover.url,first_release_date,genres; limit 500;'  # Измените параметры запроса по своему усмотрению
+        data = 'search "Quake II"; fields name,summary,cover.url,first_release_date,genres; limit 500;'  # Измените параметры запроса по своему усмотрению
 
         # Отправьте запрос к API IGDB
         response = requests.post(url, headers=headers, data=data)
