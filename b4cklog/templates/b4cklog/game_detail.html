@@ -20,6 +20,17 @@
                     {% endfor %}
                 </p>
             {% endif %}
+            <form method="post" class="game-backlog-form">
+                {% csrf_token %}
+                <select name="backlog_section">
+                    <option value="backlog_want_to_play">Want to play</option>
+                    <option value="backlog_playing">Playing</option>
+                    <option value="backlog_played">Played</option>
+                    <option value="backlog_completed">Completed</option>
+                    <option value="backlog_completed_100">Completed (100% achievements)</option>
+                </select>
+                <button type="submit">Добавить в бэклог</button>
+            </form>
             <a href="{% url 'b4cklog-home' %}" class="back-link">Back to Game List</a>
         </div>
     </div>

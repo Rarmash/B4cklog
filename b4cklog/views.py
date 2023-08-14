@@ -5,6 +5,7 @@ from django.contrib.staticfiles.storage import staticfiles_storage
 import random
 from django.core.paginator import Paginator
 from django.db.models import Q
+from users.models import Profile
 
 def home(request):
     all_games = Game.objects.all()
@@ -24,6 +25,13 @@ def about(request):
 
 def game_detail(request, igdb_id):
     game = get_object_or_404(Game, igdb_id=igdb_id)
+    user_profile = Profile.objects.get(user=request.user)
+
+    if request.method == 'POST':
+        backlog_section = request.POST.get('backlog_section')
+        if backlog_section in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed', 'backlog_completed_100']:
+            getattr(user_profile, backlog_section).add(game)
+    
     context = {
         'game': game
     }

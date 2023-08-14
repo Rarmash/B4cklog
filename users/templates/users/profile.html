@@ -10,7 +10,51 @@
       <p class="text-secondary">{{ user.email }}</p>
     </div>
   </div>
-  
+  <div class="backlog-section">
+    <h3>Want to play</h3>
+    {% for game in user.profile.backlog_want_to_play.all %}
+      <div class="backlog-game">
+        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        <p>{{ game.name }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="backlog-section">
+    <h3>Playing</h3>
+    {% for game in user.profile.backlog_playing.all %}
+      <div class="backlog-game">
+        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        <p>{{ game.name }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="backlog-section">
+    <h3>Played</h3>
+    {% for game in user.profile.backlog_played.all %}
+      <div class="backlog-game">
+        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        <p>{{ game.name }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="backlog-section">
+    <h3>Completed</h3>
+    {% for game in user.profile.backlog_completed.all %}
+      <div class="backlog-game">
+        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        <p>{{ game.name }}</p>
+      </div>
+    {% endfor %}
+  </div>
+  <div class="backlog-section">
+    <h3>Completed (100% achievements)</h3>
+    {% for game in user.profile.backlog_completed_100.all %}
+      <div class="backlog-game">
+        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        <p>{{ game.name }}</p>
+      </div>
+    {% endfor %}
+  </div>
   {% if request.user == user %}
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}

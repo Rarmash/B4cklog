@@ -162,7 +162,7 @@ footer {
     color: white;
 }
 
-.game-cover img {
+.game-cover img, .backlog-game img {
     max-height: 250px;
     max-width: 200px;
     width: auto;
@@ -199,7 +199,7 @@ footer {
     color: white;
 }
 
-.back-link {
+.back-link, .backlog-game p {
     display: block;
     margin-top: 20px;
     color: white;
