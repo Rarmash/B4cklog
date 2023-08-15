@@ -1,4 +1,7 @@
 {% extends 'b4cklog/base.html' %}
+{% load static %}
 {% block content %}
     <h1>Games backlog written in Python by @r4rm4sh.</h1>
+    <img class="about-icon" src="{% static 'github-icon.png' %}">
+    <a class="about-github" target="_blank" rel="noopener noreferrer" href="https://github.com/Rarmash/B4cklog">Open project on Github</a>
 {% endblock content %}

@@ -10,50 +10,60 @@
       <p class="text-secondary">{{ user.email }}</p>
     </div>
   </div>
-  <div class="backlog-section">
-    <h3>Want to play</h3>
-    {% for game in user.profile.backlog_want_to_play.all %}
-      <div class="backlog-game">
-        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
-        <p>{{ game.name }}</p>
+  <div class="backlog-row">
+    <div class="backlog-game horizontal">
+      <h3>Want to play</h3>
+      <div class="backlog-game-tile horizontal"> 
+        {% for game in user.profile.backlog_want_to_play.all|slice:":10" %}
+          <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        {% endfor %}
       </div>
-    {% endfor %}
+      <a href="{% url 'backlog_category' 'backlog_want_to_play' %}" class="backlog-category-link">See all</a>
+    </div>
   </div>
-  <div class="backlog-section">
-    <h3>Playing</h3>
-    {% for game in user.profile.backlog_playing.all %}
-      <div class="backlog-game">
-        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
-        <p>{{ game.name }}</p>
+  <div class="backlog-row">
+    <div class="backlog-game horizontal">
+      <h3>Playing</h3>
+      <div class="backlog-game-tile horizontal"> 
+        {% for game in user.profile.backlog_playing.all|slice:":10" %}
+          <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        {% endfor %}
       </div>
-    {% endfor %}
+      <a href="{% url 'backlog_category' 'backlog_playing' %}" class="backlog-category-link">See all</a>
+    </div>
   </div>
-  <div class="backlog-section">
-    <h3>Played</h3>
-    {% for game in user.profile.backlog_played.all %}
-      <div class="backlog-game">
-        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
-        <p>{{ game.name }}</p>
+  <div class="backlog-row">
+    <div class="backlog-game horizontal">
+      <h3>Played</h3>
+      <div class="backlog-game-tile horizontal"> 
+        {% for game in user.profile.backlog_played.all|slice:":10" %}
+          <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        {% endfor %}
       </div>
-    {% endfor %}
+      <a href="{% url 'backlog_category' 'backlog_played' %}" class="backlog-category-link">See all</a>
+    </div>
   </div>
-  <div class="backlog-section">
-    <h3>Completed</h3>
-    {% for game in user.profile.backlog_completed.all %}
-      <div class="backlog-game">
-        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
-        <p>{{ game.name }}</p>
+  <div class="backlog-row">
+    <div class="backlog-game horizontal">
+      <h3>Completed</h3>
+      <div class="backlog-game-tile horizontal"> 
+        {% for game in user.profile.backlog_completed.all|slice:":10" %}
+          <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        {% endfor %}
       </div>
-    {% endfor %}
+      <a href="{% url 'backlog_category' 'backlog_completed' %}" class="backlog-category-link">See all</a>
+    </div>
   </div>
-  <div class="backlog-section">
-    <h3>Completed (100% achievements)</h3>
-    {% for game in user.profile.backlog_completed_100.all %}
-      <div class="backlog-game">
-        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
-        <p>{{ game.name }}</p>
+  <div class="backlog-row">
+    <div class="backlog-game horizontal">
+      <h3>Completed (100% achievements)</h3>
+      <div class="backlog-game-tile horizontal"> 
+        {% for game in user.profile.backlog_completed_100.all|slice:":10" %}
+          <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        {% endfor %}
       </div>
-    {% endfor %}
+      <a href="{% url 'backlog_category' 'backlog_completed_100' %}" class="backlog-category-link">See all</a>
+    </div>
   </div>
   {% if request.user == user %}
   <form method="POST" enctype="multipart/form-data">

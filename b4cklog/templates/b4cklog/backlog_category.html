@@ -1,0 +1,16 @@
+{% extends 'b4cklog/base.html' %}
+{% block content %}
+<div class="content-section">
+    <h2>{{ category|capfirst }}</h2>
+    <div class="game-tiles">
+        {% for game in games %}
+            <div class="game-tile">
+                <a href="{% url 'game_detail' game.igdb_id %}">
+                    <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+                    <p>{{ game.name }}</p>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock content %}

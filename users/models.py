@@ -25,3 +25,17 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+            
+    def get_backlog_by_category(self, category):
+        if category == 'backlog_want_to_play':
+            return self.backlog_want_to_play.all()
+        elif category == 'backlog_playing':
+            return self.backlog_playing.all()
+        elif category == 'backlog_played':
+            return self.backlog_played.all()
+        elif category == 'backlog_completed':
+            return self.backlog_completed.all()
+        elif category == 'backlog_completed_100':
+            return self.backlog_completed_100.all()
+        else:
+            return None

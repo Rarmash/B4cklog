@@ -6,6 +6,7 @@ import random
 from django.core.paginator import Paginator
 from django.db.models import Q
 from users.models import Profile
+from django.contrib.auth.decorators import login_required
 
 def home(request):
     all_games = Game.objects.all()
@@ -29,6 +30,13 @@ def game_detail(request, igdb_id):
 
     if request.method == 'POST':
         backlog_section = request.POST.get('backlog_section')
+        
+        # Убираем игру из других категорий, если она там была
+        for category in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed', 'backlog_completed_100']:
+            if category != backlog_section and game in getattr(user_profile, category).all():
+                getattr(user_profile, category).remove(game)
+        
+        # Добавляем игру в выбранную категорию
         if backlog_section in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed', 'backlog_completed_100']:
             getattr(user_profile, backlog_section).add(game)
     
@@ -64,3 +72,15 @@ def search_results(request):
     }
 
     return render(request, 'b4cklog/search_results.html', context)
+
+@login_required
+def backlog_category(request, category):
+    user = request.user
+    profile = Profile.objects.get(user=user)
+    games = profile.get_backlog_by_category(category)
+    
+    context = {
+        'category': category,
+        'games': games
+    }
+    return render(request, 'b4cklog/backlog_category.html', context)
