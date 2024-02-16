@@ -25,7 +25,7 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
-            
+
     def get_backlog_by_category(self, category):
         if category == 'backlog_want_to_play':
             return self.backlog_want_to_play.all()

@@ -11,7 +11,7 @@ def register(request):
         if form.is_valid():
             form.save()
             username = form.cleaned_data.get('username')
-            messages.success(request, f'Your accout created. You can log in using your username: {username}')
+            messages.success(request, f'Your account created. You can log in using your username: {username}')
             return redirect('login')
     else:
         form = UserRegisterForm()
@@ -21,6 +21,7 @@ def register(request):
 @login_required
 def redirect_to_own_profile(request):
     return redirect('profile', username=request.user.username)
+
 
 @login_required
 def profile(request, username):

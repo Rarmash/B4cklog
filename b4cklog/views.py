@@ -8,6 +8,7 @@ from django.db.models import Q
 from users.models import Profile
 from django.contrib.auth.decorators import login_required
 
+
 def home(request):
     all_games = Game.objects.all()
     randomized_games = random.sample(list(all_games), len(all_games))  # Рандомизация списка игр
@@ -20,9 +21,11 @@ def home(request):
         'games': page
     }
     return render(request, 'b4cklog/home.html', context)
- 
+
+
 def about(request):
-	return render(request, 'b4cklog/about.html', {'title': 'About B4cklog'})
+    return render(request, 'b4cklog/about.html', {'title': 'About B4cklog'})
+
 
 def game_detail(request, igdb_id):
     game = get_object_or_404(Game, igdb_id=igdb_id)
@@ -30,20 +33,23 @@ def game_detail(request, igdb_id):
 
     if request.method == 'POST':
         backlog_section = request.POST.get('backlog_section')
-        
+
         # Убираем игру из других категорий, если она там была
-        for category in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed', 'backlog_completed_100']:
+        for category in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed',
+                         'backlog_completed_100']:
             if category != backlog_section and game in getattr(user_profile, category).all():
                 getattr(user_profile, category).remove(game)
-        
+
         # Добавляем игру в выбранную категорию
-        if backlog_section in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed', 'backlog_completed_100']:
+        if backlog_section in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed',
+                               'backlog_completed_100']:
             getattr(user_profile, backlog_section).add(game)
-    
+
     context = {
         'game': game
     }
     return render(request, 'b4cklog/game_detail.html', context)
+
 
 def game_search(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
@@ -73,12 +79,13 @@ def search_results(request):
 
     return render(request, 'b4cklog/search_results.html', context)
 
+
 @login_required
 def backlog_category(request, category):
     user = request.user
     profile = Profile.objects.get(user=user)
     games = profile.get_backlog_by_category(category)
-    
+
     context = {
         'category': category,
         'games': games

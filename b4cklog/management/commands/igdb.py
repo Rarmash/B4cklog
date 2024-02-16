@@ -4,18 +4,20 @@ from ...models import Game, Platform
 import datetime
 from options import twitch_clientID, twitch_clientSecret
 
+
 class Command(BaseCommand):
     help = 'Import games from IGDB'
 
     def handle(self, *args, **options):
         # Настройте параметры запроса к API IGDB
-        
+
         clientID = twitch_clientID
         clientSecret = twitch_clientSecret
-        
-        pre_response = requests.post(f'https://id.twitch.tv/oauth2/token?client_id={clientID}&client_secret={clientSecret}&grant_type=client_credentials').json()
+
+        pre_response = requests.post(
+            f'https://id.twitch.tv/oauth2/token?client_id={clientID}&client_secret={clientSecret}&grant_type=client_credentials').json()
         access_token = pre_response['access_token']
-        
+
         url = "https://api.igdb.com/v4/games"
         headers = {
             "Client-ID": clientID,
@@ -46,7 +48,8 @@ class Command(BaseCommand):
                     game.summary = game_data.get("summary")
                 if "cover" in game_data:
                     if "url" in game_data[u'cover']:
-                        game.cover = str('https://' + str(game_data.get("cover")[u"url"])[2:]).replace("t_thumb", "t_cover_big")
+                        game.cover = str('https://' + str(game_data.get("cover")[u"url"])[2:]).replace("t_thumb",
+                                                                                                       "t_cover_big")
                 game.first_release_date = first_release_date
                 platforms_data = game_data.get("platforms")
                 if platforms_data:
@@ -55,7 +58,8 @@ class Command(BaseCommand):
                             platform = Platform.objects.get(platform_id=platform_id)
                         except Platform.DoesNotExist:
                             platform_url = f"https://api.igdb.com/v4/platforms"
-                            platform_response = requests.post(platform_url, headers=headers, data=f"fields *; where id = {platform_id};").json()[0]
+                            platform_response = requests.post(platform_url, headers=headers,
+                                                              data=f"fields *; where id = {platform_id};").json()[0]
                             platform, created = Platform.objects.get_or_create(
                                 platform_id=platform_id,
                                 defaults={'name': platform_response.get('name')}
@@ -71,4 +75,3 @@ class Command(BaseCommand):
                 self.stdout.write(self.style.SUCCESS(f"Imported game: {game.name}"))
         else:
             self.stdout.write(self.style.ERROR(f"Failed to fetch data from IGDB ({response.status_code})"))
-

@@ -13,6 +13,7 @@ class Platform(models.Model):
     def __str__(self):  # Исправлена ошибка в методе str
         return self.name
 
+
 class Game(models.Model):
     igdb_id = models.IntegerField(unique=True)
     name = models.CharField(max_length=200)
