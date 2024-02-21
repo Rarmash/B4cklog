@@ -19,17 +19,34 @@
                         {{ platform.name }}{% if not forloop.last %}, {% endif %}
                     {% endfor %}
                 </p>
+            <p class = "marks_title">Оценка:
+                <select id = "marks_select" name = "marks">
+                    <option value = "mark_1">1</option>
+                    <option value = "mark_2">2</option>
+                    <option value = "mark_3">3</option>
+                    <option value = "mark_4">4</option>
+                    <option value = "mark_5">5</option>
+                    <option value = "mark_6">6</option>
+                    <option value = "mark_7">7</option>
+                    <option value = "mark_8">8</option>
+                    <option value = "mark_9">9</option>
+                    <option value = "mark_10">10</option>
+                </select>
+                <button>Добавить оценку</button>
+            </p>
             {% endif %}
             <form method="post" class="game-backlog-form">
                 {% csrf_token %}
-                <select name="backlog_section">
-                    <option value="backlog_want_to_play">Want to play</option>
-                    <option value="backlog_playing">Playing</option>
-                    <option value="backlog_played">Played</option>
-                    <option value="backlog_completed">Completed</option>
-                    <option value="backlog_completed_100">Completed (100% achievements)</option>
-                </select>
-                <button type="submit">Добавить в бэклог</button>
+                <p class = "play_title">Игровой процесс: 
+                    <select name="backlog_section">
+                        <option value="backlog_want_to_play">Want to play</option>
+                        <option value="backlog_playing">Playing</option>
+                        <option value="backlog_played">Played</option>
+                        <option value="backlog_completed">Completed</option>
+                        <option value="backlog_completed_100">Completed (100% achievements)</option>
+                    </select>
+                    <button type="submit">Добавить в бэклог</button>
+                </p>
             </form>
             <a href="{% url 'b4cklog-home' %}" class="back-link">Back to Game List</a>
         </div>
