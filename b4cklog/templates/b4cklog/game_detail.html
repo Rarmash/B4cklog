@@ -51,6 +51,10 @@
                     <button type="submit">Добавить в бэклог</button>
                 </p>
             </form>
+            <form method="post" class="game-backlog-delete-form">
+                {% csrf_token %}
+                <button type="submit">Удалить из бэклога</button>
+            </form>
             <a href="{% url 'b4cklog-home' %}" class="back-link">Back to Game List</a>
         </div>
     </div>
