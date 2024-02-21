@@ -43,6 +43,7 @@
       <a href="{% url 'backlog_category' 'backlog_played' %}" class="backlog-category-link">See all</a>
     </div>
   </div>
+
   <div class="backlog-row">
     <div class="backlog-game horizontal">
       <h3>Completed</h3>
@@ -54,6 +55,7 @@
       <a href="{% url 'backlog_category' 'backlog_completed' %}" class="backlog-category-link">See all</a>
     </div>
   </div>
+
   <div class="backlog-row">
     <div class="backlog-game horizontal">
       <h3>Completed (100% achievements)</h3>
@@ -65,6 +67,19 @@
       <a href="{% url 'backlog_category' 'backlog_completed_100' %}" class="backlog-category-link">See all</a>
     </div>
   </div>
+  
+  <div class="backlog-row">
+    <div class="backlog-game horizontal">
+      <h3>Оценки</h3>
+      <div class="backlog-game-tile horizontal">
+        {% for game in user.profile.mark1.all|slice:":10" %}
+        <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+        {% endfor %}
+      </div>
+      <a href="{% url 'backlog_category' 'mark1' %}" class="backlog-category-link">See all</a>
+    </div>
+  </div>
+  
   {% if request.user == user %}
   <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}

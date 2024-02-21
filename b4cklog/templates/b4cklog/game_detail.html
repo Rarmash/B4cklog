@@ -20,7 +20,7 @@
                     {% endfor %}
                 </p>
             <p class = "marks_title">Оценка:
-                <select id="marks_select" name="marks">
+                <select id="marks_select" name="marks_select">
                     <option value = "mark_1">1</option>
                     <option value = "mark_2">2</option>
                     <option value = "mark_3">3</option>
@@ -32,8 +32,9 @@
                     <option value = "mark_9">9</option>
                     <option value = "mark_10">10</option>
                 </select>
-                <button>Добавить оценку</button>
-            </p>
+                <button onclick="addRating()">Добавить оценку</button>
+                <!-- <button>Добавить оценку</button> -->
+            </p>           
             {% endif %}
             <form method="post" class="game-backlog-form">
                 {% csrf_token %}
@@ -50,5 +51,29 @@
             </form>
             <a href="{% url 'b4cklog-home' %}" class="back-link">Back to Game List</a>
         </div>
+        <script>
+            function addRating() {
+            var selectedMark = document.getElementById("marks_select").value;
+            var gameId = "{{ game.id }}";  // Замените на ваш способ получения идентификатора игры
+
+            // Отправка оценки на сервер с использованием AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open("POST", "/save-rating/", true);  // Замените на правильный URL для сохранения оценок
+            xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    console.log("Оценка успешно сохранена!");
+                }
+            };
+
+            var data = JSON.stringify({
+                "game_id": gameId,
+                "rating": selectedMark
+            });
+
+            xhr.send(data);
+        }
+        </script>
     </div>
 {% endblock content %}
