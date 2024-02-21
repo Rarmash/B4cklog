@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Game
+from .models import Game, GameRating
 from django.http import JsonResponse
 from django.contrib.staticfiles.storage import staticfiles_storage
 import random
@@ -7,7 +7,9 @@ from django.core.paginator import Paginator
 from django.db.models import Q
 from users.models import Profile
 from django.contrib.auth.decorators import login_required
-
+from django.views.decorators.http import require_POST
+from django.http import HttpResponseBadRequest
+from django.shortcuts import redirect
 
 def home(request):
     all_games = Game.objects.all()
@@ -27,12 +29,13 @@ def about(request):
     return render(request, 'b4cklog/about.html', {'title': 'About B4cklog'})
 
 
-# Добавление в беклог
+@login_required
 def game_detail(request, igdb_id):
     game = get_object_or_404(Game, igdb_id=igdb_id)
     user_profile = Profile.objects.get(user=request.user)
 
     if request.method == 'POST':
+        # Updating backlog section
         backlog_section = request.POST.get('backlog_section')
 
         # Убираем игру из других категорий, если она там была
@@ -50,6 +53,31 @@ def game_detail(request, igdb_id):
         'game': game
     }
     return render(request, 'b4cklog/game_detail.html', context)
+
+
+@login_required
+@require_POST
+def save_rating(request):
+    game_id = request.POST.get('game_id')
+    rating = request.POST.get('rating')
+
+    if not game_id or not rating:
+        return HttpResponseBadRequest("Missing game_id or rating")
+
+    game = get_object_or_404(Game, pk=game_id)
+    user = request.user
+
+    # Проверяем, есть ли у пользователя уже оценка для этой игры, и обновляем, если есть
+    try:
+        game_rating = GameRating.objects.get(user=user, game=game)
+    except GameRating.DoesNotExist:
+        game_rating = GameRating(user=user, game=game)
+
+    game_rating.rating = rating
+    game_rating.save()
+
+    return redirect('game_detail', igdb_id=game.igdb_id)
+
 
 
 def game_search(request):
