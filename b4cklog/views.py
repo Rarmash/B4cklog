@@ -27,6 +27,7 @@ def about(request):
     return render(request, 'b4cklog/about.html', {'title': 'About B4cklog'})
 
 
+# Добавление в беклог
 def game_detail(request, igdb_id):
     game = get_object_or_404(Game, igdb_id=igdb_id)
     user_profile = Profile.objects.get(user=request.user)
@@ -42,7 +43,7 @@ def game_detail(request, igdb_id):
 
         # Добавляем игру в выбранную категорию
         if backlog_section in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed',
-                               'backlog_completed_100']:
+                               'backlog_completed_100', 'mark1']:
             getattr(user_profile, backlog_section).add(game)
 
     context = {
