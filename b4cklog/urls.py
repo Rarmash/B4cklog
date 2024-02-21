@@ -12,4 +12,5 @@ urlpatterns = [
     path('search/', views.game_search, name='game_search'),
     path('search/results/', views.search_results, name='search_results'),
     path('backlog/<str:category>/', views.backlog_category, name='backlog_category'),
+    path('save-rating/', views.save_rating, name='save_rating'),
 ]
