@@ -78,7 +78,15 @@ def save_rating(request):
 
     return redirect('game_detail', igdb_id=game.igdb_id)
 
-
+@login_required
+@require_POST
+def remove_game(request):
+    game_id = request.POST.get('game_id')
+    game = get_object_or_404(Game, pk=game_id)
+    user_profile = Profile.objects.get(user=request.user)
+    for category in ['backlog_want_to_play', 'backlog_playing', 'backlog_played', 'backlog_completed',
+                     'backlog_completed_100']:
+        getattr(user_profile, category).remove(game)
 
 def game_search(request):
     if request.headers.get('x-requested-with') == 'XMLHttpRequest':
