@@ -1,13 +1,25 @@
 {% extends 'b4cklog/base.html' %}
+{% load static %}
 {% block content %}
 <div class="content-section">
-    <h2>{{ category|capfirst }}</h2>
+    <div class="category_name">
+        <h2>{{ category_name }}</h2>
+    </div>
     <div class="game-tiles">
         {% for game in games %}
             <div class="game-tile">
                 <a href="{% url 'game_detail' game.igdb_id %}">
-                    <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
-                    <p>{{ game.name }}</p>
+                    <div class="game-cover">
+                        {% if game.cover %}
+                            <img src="{{ game.cover }}" alt="{{ game.name }} Cover">
+                        {% else %}
+                            <img src="{% static 'default_cover.jpg' %}" alt="{{ game.name }} Cover">
+                        {% endif %}
+                    </div>
+                    <div class="game-details">
+                        <h2 class="game-title">{{ game.name }}</h2>
+                        <p class="release-date">{{ game.first_release_date }}</p>
+                    </div>
                 </a>
             </div>
         {% endfor %}

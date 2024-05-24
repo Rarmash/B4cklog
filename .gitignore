@@ -162,3 +162,4 @@ cython_debug/
 
 .env
 media/profile_pics/
+b4cklog/management/commands/igdb.py

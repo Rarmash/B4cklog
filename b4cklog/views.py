@@ -122,9 +122,21 @@ def backlog_category(request, category):
     user = request.user
     profile = Profile.objects.get(user=user)
     games = profile.get_backlog_by_category(category)
+    match category:
+        case "backlog_want_to_play":
+            category_name = "Want to play"
+        case "backlog_playing":
+            category_name = "Playing"
+        case "backlog_played":
+            category_name = "Played"
+        case "backlog_completed":
+            category_name = "Completed"
+        case "backlog_completed_100":
+            category_name = "Completed (100% achievements)"
 
     context = {
         'category': category,
+        'category_name': category_name,
         'games': games
     }
     return render(request, 'b4cklog/backlog_category.html', context)

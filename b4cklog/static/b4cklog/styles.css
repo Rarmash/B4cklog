@@ -264,7 +264,7 @@ footer {
     margin-top: 10px;
   }
   
-.backlog-game.horizontal {
+.backlog-game.horizontal, .category_name {
     display: flex;
     flex-direction: column;
     align-items: center;

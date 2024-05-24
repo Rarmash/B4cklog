@@ -20,27 +20,10 @@
                     {% endfor %}
                 </p>
             {% endif %}
-            <form method="post" action="{% url 'save_rating' %}" class="game-rating-form">
-                {% csrf_token %}
-                <input type="hidden" name="game_id" value="{{ game.id }}">
-                <label for="rating">Rating:</label>
-                <select id="rating" name="rating">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="6">6</option>
-                    <option value="7">7</option>
-                    <option value="8">8</option>
-                    <option value="9">9</option>
-                    <option value="10">10</option>
-                </select>
-                <button type="submit">Add Rating</button>
-            </form>
+
             <form method="post" class="game-backlog-form">
                 {% csrf_token %}
-                <p class = "play_title">Игровой процесс: 
+                <p class = "play_title">Current status: 
                     <select name="backlog_section">
                         <option value="backlog_want_to_play">Want to play</option>
                         <option value="backlog_playing">Playing</option>
@@ -48,12 +31,12 @@
                         <option value="backlog_completed">Completed</option>
                         <option value="backlog_completed_100">Completed (100% achievements)</option>
                     </select>
-                    <button type="submit">Добавить в бэклог</button>
+                    <button type="submit">Add to backlog</button>
                 </p>
             </form>
             <form method="post" class="game-backlog-delete-form">
                 {% csrf_token %}
-                <button type="submit">Удалить из бэклога</button>
+                <button type="submit">Remove from backlog</button>
             </form>
             <a href="{% url 'b4cklog-home' %}" class="back-link">Back to Game List</a>
         </div>
