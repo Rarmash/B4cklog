@@ -1,5 +1,10 @@
-from django.urls import path
+from django.urls import path, include
+from rest_framework.routers import DefaultRouter
 from . import views
+
+router = DefaultRouter()
+router.register(r'platforms', views.PlatformViewSet)
+router.register(r'games', views.GameViewSet)
 
 urlpatterns = [
     path('', views.home, name='b4cklog-home'),
@@ -12,5 +17,6 @@ urlpatterns = [
     path('search/', views.game_search, name='game_search'),
     path('search/results/', views.search_results, name='search_results'),
     path('backlog/<str:category>/', views.backlog_category, name='backlog_category'),
-    path('save-rating/', views.save_rating, name='save_rating'),
+    # path('save-rating/', views.save_rating, name='save_rating'),
+    path('api/', include(router.urls)),
 ]

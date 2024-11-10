@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Game, GameRating
+from .models import Platform, Game
 from django.http import JsonResponse
 from django.contrib.staticfiles.storage import staticfiles_storage
 import random
@@ -10,6 +10,10 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect
+
+from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticatedOrReadOnly
+from .serializers import PlatformSerializer, GameSerializer, GameRatingSerializer
 
 def home(request):
     all_games = Game.objects.all()
@@ -55,28 +59,28 @@ def game_detail(request, igdb_id):
     return render(request, 'b4cklog/game_detail.html', context)
 
 
-@login_required
-@require_POST
-def save_rating(request):
-    game_id = request.POST.get('game_id')
-    rating = request.POST.get('rating')
-
-    if not game_id or not rating:
-        return HttpResponseBadRequest("Missing game_id or rating")
-
-    game = get_object_or_404(Game, pk=game_id)
-    user = request.user
-
-    # Проверяем, есть ли у пользователя уже оценка для этой игры, и обновляем, если есть
-    try:
-        game_rating = GameRating.objects.get(user=user, game=game)
-    except GameRating.DoesNotExist:
-        game_rating = GameRating(user=user, game=game)
-
-    game_rating.rating = rating
-    game_rating.save()
-
-    return redirect('game_detail', igdb_id=game.igdb_id)
+# @login_required
+# @require_POST
+# def save_rating(request):
+#     game_id = request.POST.get('game_id')
+#     rating = request.POST.get('rating')
+#
+#     if not game_id or not rating:
+#         return HttpResponseBadRequest("Missing game_id or rating")
+#
+#     game = get_object_or_404(Game, pk=game_id)
+#     user = request.user
+#
+#     # Проверяем, есть ли у пользователя уже оценка для этой игры, и обновляем, если есть
+#     try:
+#         game_rating = GameRating.objects.get(user=user, game=game)
+#     except GameRating.DoesNotExist:
+#         game_rating = GameRating(user=user, game=game)
+#
+#     game_rating.rating = rating
+#     game_rating.save()
+#
+#     return redirect('game_detail', igdb_id=game.igdb_id)
 
 @login_required
 @require_POST
@@ -140,3 +144,16 @@ def backlog_category(request, category):
         'games': games
     }
     return render(request, 'b4cklog/backlog_category.html', context)
+
+###############
+
+class PlatformViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Platform.objects.all()
+    serializer_class = PlatformSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
+
+
+class GameViewSet(viewsets.ModelViewSet):
+    queryset = Game.objects.all()
+    serializer_class = GameSerializer
+    permission_classes = [IsAuthenticatedOrReadOnly]
