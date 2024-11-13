@@ -8,8 +8,11 @@ from options import twitch_clientID, twitch_clientSecret
 class Command(BaseCommand):
     help = 'Import games from IGDB'
 
+    def add_arguments(self, parser):
+        parser.add_argument('search_query', type=str, help='The search query for the game')
+
     def handle(self, *args, **options):
-        # Настройте параметры запроса к API IGDB
+        search_query = options['search_query']
 
         clientID = twitch_clientID
         clientSecret = twitch_clientSecret
@@ -24,7 +27,7 @@ class Command(BaseCommand):
             "Authorization": f"Bearer {access_token}",
         }
         print(access_token)
-        data = 'search "Gears of War"; fields name,summary,cover.url,first_release_date,genres,platforms; limit 500;'  # Измените параметры запроса по своему усмотрению
+        data = f'search "{search_query}"; fields name,summary,cover.url,first_release_date,genres,platforms; limit 500;'  # Измените параметры запроса по своему усмотрению
 
         # Отправьте запрос к API IGDB
         response = requests.post(url, headers=headers, data=data)
