@@ -36,6 +36,9 @@ pip install -r requirements.txt
 ```ENV
 twitch_clientID=         // Идентификатор клиента
 twitch_clientSecret=     // Секретный код клиента
+mysql_user=              // Имя пользователя БД MySQL
+mysql_password=          // Пароль БД MySQL
+mysql_host=              // IP-адрес БД MySQL
 ```
 6: Запустите проект:
 ```BASH
