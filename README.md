@@ -46,7 +46,7 @@ python manage.py runserver localhost:8000
 ```
 
 ## Дополнительные команды:
-Импорт игр из библиотеки IGDB (предварительно измените запрос в файле `b4cklog/management/commands/igdb.py`):
+Импорт игр из библиотеки IGDB:
 ```BASH
-python manage.py igdb
+python manage.py igdb "`название игры`"
 ```
