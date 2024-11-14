@@ -19,6 +19,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.auth import views as auth_views
 from django.urls import path, include
+from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from users import views as user_views
 from b4cklog import views as b4cklog_views
 
@@ -31,6 +32,8 @@ urlpatterns = [
     path('game/<int:igdb_id>/', b4cklog_views.game_detail, name='game_detail'),
     path('login/', auth_views.LoginView.as_view(template_name='users/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(template_name='users/logout.html'), name='logout'),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('', include('b4cklog.urls')),
     path('', include('users.urls'))
 ]
