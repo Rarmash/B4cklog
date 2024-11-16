@@ -10,10 +10,12 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect
-
 from rest_framework import viewsets
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .serializers import PlatformSerializer, GameSerializer, GameRatingSerializer
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework.pagination import PageNumberPagination
 
 def home(request):
     all_games = Game.objects.all()
@@ -157,3 +159,13 @@ class GameViewSet(viewsets.ModelViewSet):
     queryset = Game.objects.all()
     serializer_class = GameSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
+
+class GameListView(APIView):
+    def get(self, request):
+        games = list(Game.objects.all())
+        random.shuffle(games)  # Перемешиваем игры
+        paginator = PageNumberPagination()
+        paginator.page_size = 60  # По 60 игр на страницу
+        result_page = paginator.paginate_queryset(games, request)
+        serializer = GameSerializer(result_page, many=True)
+        return paginator.get_paginated_response(serializer.data)
