@@ -14,10 +14,10 @@ class Platform(models.Model):
 
 # Модель игры.
 class Game(models.Model):
-    igdb_id = models.IntegerField(unique=True)  # Уникальный идентификатор игры в базе данных IGDB.
-    name = models.CharField(max_length=200)  # Краткое описание игры.
+    igdb_id = models.IntegerField(unique=True, db_index=True)  # Уникальный идентификатор игры в базе данных IGDB.
+    name = models.CharField(max_length=200, db_index=True)  # Краткое описание игры.
     summary = models.TextField()  # Ссылка на обложку игры (необязательно).
-    cover = models.URLField(blank=True)  # Дата первого релиза игры (может быть пустой).
+    cover = models.URLField(blank=True, db_index=True)  # Дата первого релиза игры (может быть пустой).
     first_release_date = models.DateField(null=True)  # Дата первого релиза игры (может быть пустой).
     platforms = models.ManyToManyField(Platform)  # Связь многие-ко-многим с моделью Platform.
     # ratings = models.ManyToManyField(User, through='GameRating',

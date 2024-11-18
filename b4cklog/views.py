@@ -16,6 +16,7 @@ from .serializers import PlatformSerializer, GameSerializer, GameRatingSerialize
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.pagination import PageNumberPagination
+from rest_framework.generics import ListAPIView
 
 def home(request):
     all_games = Game.objects.all()
@@ -160,12 +161,6 @@ class GameViewSet(viewsets.ModelViewSet):
     serializer_class = GameSerializer
     permission_classes = [IsAuthenticatedOrReadOnly]
 
-class GameListView(APIView):
-    def get(self, request):
-        games = list(Game.objects.all())
-        random.shuffle(games)  # Перемешиваем игры
-        paginator = PageNumberPagination()
-        paginator.page_size = 10  # По 60 игр на страницу
-        result_page = paginator.paginate_queryset(games, request)
-        serializer = GameSerializer(result_page, many=True)
-        return paginator.get_paginated_response(serializer.data)
+class GameListView(ListAPIView):
+    queryset = Game.objects.all().order_by('?').only('id', 'name', 'cover')
+    serializer_class = GameSerializer
