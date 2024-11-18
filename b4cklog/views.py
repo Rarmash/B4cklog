@@ -165,7 +165,7 @@ class GameListView(APIView):
         games = list(Game.objects.all())
         random.shuffle(games)  # Перемешиваем игры
         paginator = PageNumberPagination()
-        paginator.page_size = 60  # По 60 игр на страницу
+        paginator.page_size = 10  # По 60 игр на страницу
         result_page = paginator.paginate_queryset(games, request)
         serializer = GameSerializer(result_page, many=True)
         return paginator.get_paginated_response(serializer.data)

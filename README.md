@@ -45,6 +45,33 @@ mysql_host=              // IP-адрес БД MySQL
 python manage.py runserver localhost:8000
 ```
 
+## Запуск через Docker:
+1. Клонируйте репозиторий:
+```BASH
+git clone https://github.com/Rarmash/B4cklog.git
+```
+2. Смените директорию
+```BASH
+cd B4cklog
+```
+3. Создайте приложение по данной [ссылке](https://dev.twitch.tv/console/apps).
+4. Заполните файл .env согласно следующему шаблону:
+```ENV
+twitch_clientID=         // Идентификатор клиента
+twitch_clientSecret=     // Секретный код клиента
+mysql_user=              // Имя пользователя БД MySQL
+mysql_password=          // Пароль БД MySQL
+mysql_host=              // IP-адрес БД MySQL
+```
+5. Соберите Docker-образ:
+```BASH
+docker build -t "название образа" .
+```
+6. Запустите контейнер с пробросом порта:
+```BASH
+docker run -p 8000:8000 "название образа"
+```
+
 ## Дополнительные команды:
 Импорт игр из библиотеки IGDB:
 ```BASH
