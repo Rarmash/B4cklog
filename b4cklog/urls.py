@@ -19,5 +19,6 @@ urlpatterns = [
     path('backlog/<str:category>/', views.backlog_category, name='backlog_category'),
     # path('save-rating/', views.save_rating, name='save_rating'),
     path('api/', include(router.urls)),
-    path('api/games/', views.GameListView.as_view(), name='game-list'),
+    path('api/games/', views.GameListView.as_view(), name='api-game-list'),
+    path('api/game/<int:igdb_id>/', views.GameDetailView.as_view(), name='api-game-detail'),
 ]

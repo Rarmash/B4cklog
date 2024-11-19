@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from django.http import HttpResponseBadRequest
 from django.shortcuts import redirect
-from rest_framework import viewsets
+from rest_framework import viewsets, status
 from rest_framework.permissions import IsAuthenticatedOrReadOnly
 from .serializers import PlatformSerializer, GameSerializer, GameRatingSerializer
 from rest_framework.views import APIView
@@ -164,3 +164,13 @@ class GameViewSet(viewsets.ModelViewSet):
 class GameListView(ListAPIView):
     queryset = Game.objects.all().order_by('?').only('id', 'name', 'cover')
     serializer_class = GameSerializer
+
+class GameDetailView(APIView):
+    def get(self, request, igdb_id):
+        try:
+            game = Game.objects.get(igdb_id=igdb_id)
+        except Game.DoesNotExist:
+            return Response({"error": "Game not found"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = GameSerializer(game)
+        return Response(serializer.data)
