@@ -174,3 +174,14 @@ class GameDetailView(APIView):
 
         serializer = GameSerializer(game)
         return Response(serializer.data)
+
+class GameSearchView(APIView):
+    def get(self, request):
+        query = request.GET.get('q', '')
+        if query:
+            games = Game.objects.filter(name__icontains=query)
+            paginator = PageNumberPagination()
+            paginated_games = paginator.paginate_queryset(games, request)
+            serializer = GameSerializer(paginated_games, many=True)
+            return paginator.get_paginated_response(serializer.data)
+        return Response({"error": "No query provided"}, status=status.HTTP_400_BAD_REQUEST)

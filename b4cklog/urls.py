@@ -21,4 +21,5 @@ urlpatterns = [
     path('api/', include(router.urls)),
     path('api/games/', views.GameListView.as_view(), name='api-game-list'),
     path('api/game/<int:igdb_id>/', views.GameDetailView.as_view(), name='api-game-detail'),
+    path('api/search/', views.GameSearchView.as_view(), name='api-game-search'),
 ]
